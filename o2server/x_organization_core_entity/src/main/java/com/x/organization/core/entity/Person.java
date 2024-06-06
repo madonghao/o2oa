@@ -409,6 +409,19 @@ public class Person extends SliceJpaObject {
 	@CheckPersist(allowEmpty = true)
 	private String qiyeweixinHash;
 
+	public static final String yunzhijiaId_FIELDNAME = "yunzhijiaId";
+	@FieldDescribe("云之家人员ID.")
+	@Column(length = length_255B, name = ColumnNamePrefix + yunzhijiaId_FIELDNAME)
+	@Index(name = TABLE + IndexNameMiddle + yunzhijiaId_FIELDNAME)
+	@CheckPersist(allowEmpty = true)
+	private String yunzhijiaId;
+
+	public static final String yunzhijiaHash_FIELDNAME = "yunzhijiaHash";
+	@FieldDescribe("云之家人员哈希特征.")
+	@Column(length = length_255B, name = ColumnNamePrefix + yunzhijiaHash_FIELDNAME)
+	@CheckPersist(allowEmpty = true)
+	private String yunzhijiaHash;
+
 	public static final String andFxHash_FIELDNAME = "andFxHash";
 	@FieldDescribe("移动办公人员哈希特征.")
 	@Column(length = length_255B, name = ColumnNamePrefix + andFxHash_FIELDNAME)

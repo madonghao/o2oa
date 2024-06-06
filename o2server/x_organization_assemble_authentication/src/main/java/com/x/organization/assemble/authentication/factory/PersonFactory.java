@@ -115,6 +115,7 @@ public class PersonFactory extends AbstractFactory {
 		p = cb.or(p, cb.equal(root.get(Person_.employee), credential));
 		p = cb.or(p, cb.equal(root.get(Person_.mpwxopenId), credential));
 		p = cb.or(p, cb.equal(root.get(Person_.qiyeweixinId), credential));
+		p = cb.or(p, cb.equal(root.get(Person_.yunzhijiaId), credential));
 		p = cb.or(p, cb.equal(root.get(Person_.dingdingId), credential));
 		p = cb.or(p, cb.equal(root.get(Person_.open1Id), credential));
 		p = cb.or(p, cb.equal(root.get(Person_.open2Id), credential));
@@ -136,6 +137,21 @@ public class PersonFactory extends AbstractFactory {
 		CriteriaQuery<String> cq = cb.createQuery(String.class);
 		Root<Person> root = cq.from(Person.class);
 		Predicate p = cb.equal(root.get(Person_.qiyeweixinId), credential);
+		cq.select(root.get(Person_.id)).where(p);
+		List<String> list = em.createQuery(cq).getResultList().stream().distinct().collect(Collectors.toList());
+		if (list.size() == 1) {
+			return list.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public String getPersonIdWithYzjId(String credential) throws Exception {
+		EntityManager em = this.entityManagerContainer().get(Person.class);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<Person> root = cq.from(Person.class);
+		Predicate p = cb.equal(root.get(Person_.yunzhijiaId), credential);
 		cq.select(root.get(Person_.id)).where(p);
 		List<String> list = em.createQuery(cq).getResultList().stream().distinct().collect(Collectors.toList());
 		if (list.size() == 1) {

@@ -84,6 +84,7 @@ public class Config {
 	public static final String PATH_CONFIG_WELINK = "config/weLink.json";
 	public static final String PATH_CONFIG_ZHENGWUDINGDING = "config/zhengwuDingding.json";
 	public static final String PATH_CONFIG_QIYEWEIXIN = "config/qiyeweixin.json";
+	public static final String PATH_CONFIG_YUNZHIJIA = "config/yunzhijia.json";
 	public static final String PATH_CONFIG_MPWEIXIN = "config/mpweixin.json";
 	public static final String PATH_CONFIG_MPWEIXIN2 = "config/mMweixin.json"; // 容错
 	public static final String PATH_CONFIG_BINDLOGO = "config/bindLogo.png";
@@ -1028,6 +1029,19 @@ public class Config {
 			instance().qiyeweixin = obj;
 		}
 		return instance().qiyeweixin;
+	}
+
+	private Yunzhijia yunzhijia;
+
+	public static synchronized Yunzhijia yunzhijia() throws Exception {
+		if (null == instance().yunzhijia) {
+			Yunzhijia obj = BaseTools.readConfigObject(PATH_CONFIG_YUNZHIJIA, Yunzhijia.class);
+			if (null == obj) {
+				obj = Yunzhijia.defaultInstance();
+			}
+			instance().yunzhijia = obj;
+		}
+		return instance().yunzhijia;
 	}
 
 	private ZhengwuDingding zhengwuDingding;

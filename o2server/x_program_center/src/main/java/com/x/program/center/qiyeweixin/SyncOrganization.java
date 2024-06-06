@@ -56,7 +56,6 @@ public class SyncOrganization {
 	public PullResult execute(Business business) throws Exception {
 		if (!BooleanUtils.isTrue(Config.qiyeweixin().getEnable())) {
 			logger.print("没有启用企业微信配置，请检查企业微信配置文件！");
-			logger.print("这是一个测试!");
 			return new PullResult();
 		}
 		// 配置启用就进行用户绑定
