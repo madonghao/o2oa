@@ -42,10 +42,28 @@ o2.xApplication.process.Xform.$ElModule = MWF.APP$ElModule =  new Class(
      */
     load: function(){
         this._loadModuleEvents();
+
+        this.form.app.addEvent('queryClose', function(){
+            if (this.vm) this.vm.$destroy();
+        }.bind(this));
+
         if (this.fireEvent("queryLoad")){
             this._queryLoaded();
             this._loadUserInterface();
         }
+    },
+    reload: function(){
+        if (!this.vm) return;
+
+        var node = this.vm.$el;
+        this.vm.$destroy();
+        node.empty();
+
+        this.vm = null;
+
+        this.vueApp = null;
+
+        this._loadUserInterface();
     },
     _checkVmodel: function(text){
         if (text){
@@ -146,9 +164,11 @@ o2.xApplication.process.Xform.$ElModule = MWF.APP$ElModule =  new Class(
         methods["$loadElEvent_"+k.camelCase()] = function(){
             var flag = true;
             if (k==="change"){
-                this.validationMode();
-                this._setBusinessData(this.getInputData());
-                if( !this.validation() )flag = false;
+                if (this.validationMode){
+                    this.validationMode();
+                    this._setBusinessData(this.getInputData());
+                    if( !this.validation() ) flag = false;
+                }
             }
             if (this.json.events && this.json.events[k] && this.json.events[k].code){
                 this.form.Macro.fire(this.json.events[k].code, this, arguments);

@@ -330,7 +330,7 @@ const Action = function(root, json){
     var createMethod = function(service, key){
         const jaxrsUri = service.uri;
         const re = new RegExp("(?<={).+?(?=})", "g");
-        const parameters = jaxrsUri.match(re);
+        const parameters = jaxrsUri.match(re) || [];
         this[key] = invokeFunction.call(this, service, parameters, key);
     };
 
@@ -631,14 +631,15 @@ const _getNameFlag = function(name){
  * @o2cn 组织查询
  * @o2category server.common
  * @o2ordernumber 170
- * @property    {GroupFactory}  group   后端的GroupFactory实例，可用于获取group群组相关数据, <a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/GroupFactory.html">查看javadoc</a>
- * @property    {IdentityFactory}  identity   后端的IdentityFactory实例，可用于获取identity身份相关数据，<a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/IdentityFactory.html">查看javadoc</a>
- * @property    {PersonFactory}  person   后端的PersonFactory实例，可用于获取person人员相关数据，<a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/PersonFactory.html">查看javadoc</a>
- * @property    {PersonAttributeFactory}  personAttribute   后端的GroupFactory实例，可用于获取personAttribute人员属性相关数据，<a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/PersonAttributeFactory.html">查看javadoc</a>
- * @property    {RoleFactory}  role   后端的RoleFactory实例，可用于获取role角色相关数据，<a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/RoleFactory.html">查看javadoc</a>
- * @property    {UnitFactory}  unit   后端的UnitFactory实例，可用于获取unit相关数据，<a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/UnitFactory.html">查看javadoc</a>
- * @property    {UnitAttributeFactory}  unitAttribute   后端的UnitAttributeFactory实例，可用于获取unitAttribute组织属性相关数据，<a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/UnitAttributeFactory.html">查看javadoc</a>
- * @property    {UnitDutyFactory}  unitDuty   后端的UnitDutyFactory实例，可用于获取unitDuty组织属性相关数据，<a target="_blank" href="../api/javadoc/organization/doc/index.html?com/x/organization/core/express/group/UnitDutyFactory.html">查看javadoc</a>
+ * @since v9.0.4
+ * @property    {GroupFactory}  group   后端的GroupFactory实例，可用于获取group群组相关数据
+ * @property    {IdentityFactory}  identity   后端的IdentityFactory实例，可用于获取identity身份相关数据
+ * @property    {PersonFactory}  person   后端的PersonFactory实例，可用于获取person人员相关数据
+ * @property    {PersonAttributeFactory}  personAttribute   后端的GroupFactory实例，可用于获取personAttribute人员属性相关数据
+ * @property    {RoleFactory}  role   后端的RoleFactory实例，可用于获取role角色相关数据
+ * @property    {UnitFactory}  unit   后端的UnitFactory实例，可用于获取unit相关数据
+ * @property    {UnitAttributeFactory}  unitAttribute   后端的UnitAttributeFactory实例，可用于获取unitAttribute组织属性相关数据
+ * @property    {UnitDutyFactory}  unitDuty   后端的UnitDutyFactory实例，可用于获取unitDuty组织属性相关数据
  * @o2syntax
  * //您可以通过以下引用来获取当前实例的org对象，如下：
  * this.org;
@@ -647,7 +648,7 @@ const _getNameFlag = function(name){
  *
  *@example
  * //通过后端java类，来获取当前人所在的部门名称
- * const unit = org.unit;
+ * const unit = org.unit();
  * const unitNames = unit.listWithPerson("张三@xxx@P");
  */
 const org = {}
@@ -665,14 +666,14 @@ Object.defineProperties(org, {
     oUnitDuty:          { get: ()=>_javaOrg().unitDuty() }
 });
 Object.assign(org,  {
-    group: ()=> this.oGroup,
-    identity: ()=> this.oIdentity,
-    person: ()=> this.oPerson,
-    personAttribute: ()=> this.oPersonAttribute,
-    role: ()=> this.oRole,
-    unit: ()=> this.oUnit,
-    unitAttribute: ()=> this.oUnitAttribute,
-    unitDuty: ()=> this.oUnitDuty,
+    group: ()=> this.org.oGroup,
+    identity: ()=> this.org.oIdentity,
+    person: ()=> this.org.oPerson,
+    personAttribute: ()=> this.org.oPersonAttribute,
+    role: ()=> this.org.oRole,
+    unit: ()=> this.org.oUnit,
+    unitAttribute: ()=> this.org.oUnitAttribute,
+    unitDuty: ()=> this.org.oUnitDuty,
 
     getObject(o, v){
         if (v && Array.isArray(v)){
@@ -2703,7 +2704,7 @@ const statement = {
                 (() => {
                     if (d.formatType === "numberValue") {
                         return parseFloat(d.value);
-                    } else if (!["sql", "sqlScript"].includes(format)) {
+                    } else if ( ["dateTimeValue","dateValue","timeValue"].includes( d.formatType ) && !["sql", "sqlScript"].includes(format)) {
                         const prefix = {dateTimeValue: 'ts', datetimeValue: 'ts', dateValue: 'd', timeValue: 't'}[d.formatType];
                         return `{${prefix} '${d.value}'}`;
                     }
@@ -4147,6 +4148,24 @@ const createProxy = function(target, j_data){
     });
     return new Proxy(target, {
         get(target, property){
+            if (property==='add'){
+                return function(key, value){
+                    if (key==="length" && (target.$Jdata instanceof ArrayList)){
+                        while (target.$Jdata.size()>value){
+                            target.$Jdata.remove(target.$Jdata.size()-1);
+                        }
+                    }else{
+                        target.$Jdata[key] = value;
+                    }
+                    return Reflect.set(target, key, value);
+                }
+            }
+            if (property==='del'){
+                return function (key) {
+                    delete target.$Jdata[key];
+                    delete target[key];
+                }
+            }
             return (property!=='$Jdata' && target[property] && (typeof target[property]==='object' || Array.isArray(target[property]))) ? createProxy(target[property], target.$Jdata[property]) : target[property];
         },
         set(target, property, value){

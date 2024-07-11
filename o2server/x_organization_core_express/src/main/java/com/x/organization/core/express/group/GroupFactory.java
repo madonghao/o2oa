@@ -125,7 +125,7 @@ public class GroupFactory {
 
 	/**
 	 * 查询人员及关联身份、组织所在的群组
-	 * 
+	 *
 	 * @param values             用户
 	 * @param recursiveGroupFlag 是否递归查询上级群组
 	 * @param referenceFlag      是否包含查找人员身份成员、人员归属组织成员的所属群组
@@ -150,7 +150,7 @@ public class GroupFactory {
 
 	/**
 	 * 查询身份及关联组织所在的群组
-	 * 
+	 *
 	 * @param values             身份
 	 * @param recursiveGroupFlag 是否递归查询上级群组
 	 * @param referenceFlag      是否包含查找人员身份成员、人员归属组织成员的所属群组

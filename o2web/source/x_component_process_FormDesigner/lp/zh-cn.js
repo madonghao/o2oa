@@ -254,7 +254,7 @@ MWF.xApplication.process.FormDesigner.LP = {
     "pageform": "页面",
     "importO2": "从O2数据导入",
     "importHTML": "从HTML导入",
-    "importOffice": "从WORD或EXCEL导入",
+    "importOffice": "从WORD导入（仅支持Word 97-2003文件 *.doc）",
     "importO2_infor": "请将O2格式的表单数据拷贝到以下编辑器中。（使用表单或页面设计器工具条上的“导出”按钮，获取表单数据）<br/>按下Ctrl+Alt+I可格式化数据",
     "importHTML_infor": "请将HTML数据拷贝到以下编辑器中。按下Ctrl+Alt+I可格式化数据",
     "importHTML_infor2": "请将CSS数据拷贝到以下编辑器中。按下Ctrl+Alt+I可格式化数据",
@@ -1533,7 +1533,8 @@ MWF.xApplication.process.FormDesigner.LP = {
         "applicationStatus": "应用status",
         "titleAddTo": "标题行添加",
         "firstLine": "首行",
-        "lastLine": "末行"
+        "lastLine": "末行",
+        "forceClearCustomStyle": "切换时清除自定义样式"
     },
     "smartbi":{
         "nosetup":"请先安装SmartBI应用",
@@ -1610,7 +1611,7 @@ MWF.xApplication.process.FormDesigner.LP = {
         "formImplodeO2": "从O2数据导入",
         "formImplodeO2Title": "导入O2格式表单",
         "htmlImplode": "从HTML导入",
-        "officeImplode": "从WORD或EXCEL导入",
+        "officeImplode": "从WORD导入（仅支持Word 97-2003文件 *.doc）",
         "help": "帮助",
         "clearNoDomModule": "清除未在HTML树中的组件配置",
         "autoSave": "自动保存",

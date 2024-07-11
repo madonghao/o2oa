@@ -478,14 +478,15 @@ MWF.xApplication.cms.Xform.Form = MWF.CMSForm = new Class(
                     }.bind(this));
                 }
                 this.mobileTools = tools;
-                //app上用原来的按钮样式
-                if (window.o2android) {
-                    if (tools.length) if (node) this._createMobileActions(node, tools);
-                } else if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.o2mLog) {
-                    if (tools.length) if (node) this._createMobileActions(node, tools);
+                if (tools.length <= 0) {
+                    if (node) node.hide();
                 } else {
-                    //钉钉 企业微信用新的样式
-                    if (tools.length) if (node) this._createMobileActionsDingdingStyle(node, tools);
+                    // app上用原来的按钮样式
+                    if (window.o2android || window.flutter_inappwebview || (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.o2mLog)) {
+                        if (node) this._createMobileActions(node, tools);
+                    } else {
+                        if (node) this._createMobileActionsDingdingStyle(node, tools);
+                    }
                 }
                 if (callback) callback();
             }.bind(this));
@@ -837,7 +838,7 @@ MWF.xApplication.cms.Xform.Form = MWF.CMSForm = new Class(
             if (!json) return null;
 
             //流程组件返回
-            if( ( json.type === "Log" && json.logType ) || ["Monitor","ReadLog"].contains(json.type) ){
+            if( ( json.type === "Log" && json.logType ) || ["Sidebar","Monitor","ReadLog"].contains(json.type) ){
                 node.empty();
                 return;
             }else if( this.options.useProcessForm && json.type === "Actionbar" ){ //使用流程表单，组件是操作条
@@ -1244,17 +1245,39 @@ MWF.xApplication.cms.Xform.Form = MWF.CMSForm = new Class(
         },
         publishDocument: function (callback, slience) {
             this.fireEvent("beforePublish");
-            this.app.content.mask({
-                "destroyOnHide": true,
-                "style": this.app.css.maskNode
-            });
+            debugger;
+            if (layout.mobile) {
+                document.body.mask({
+                    "inject": {"where": "bottom", "target": document.body},
+                    "destroyOnHide": true,
+                    "style": {
+                        "background-color": "#999",
+                        "opacity": 0.3,
+                        "z-index": 600
+                    }
+                });
+            } else {
+                this.app.content.mask({
+                    "destroyOnHide": true,
+                    "style": this.app.css.maskNode
+                });
+            }
+
             if (!this.formValidation("publish")) {
-                this.app.content.unmask();
+                if (layout.mobile) {
+                    document.body.unmask();
+                } else {
+                    this.app.content.unmask();
+                }
                 if (o2.typeOf(callback) === "function") callback();
                 return false;
             }
             if (!this.formPublishValidation()) {
-                this.app.content.unmask();
+                if (layout.mobile) {
+                    document.body.unmask();
+                } else {
+                    this.app.content.unmask();
+                }
                 if (o2.typeOf(callback) === "function") callback();
                 return false;
             }
@@ -1288,7 +1311,7 @@ MWF.xApplication.cms.Xform.Form = MWF.CMSForm = new Class(
                     if (this.app) if (this.app.fireEvent) this.app.fireEvent("afterPublish",[this, json.data]);
                     if (o2.typeOf(callback) === "function") callback(json); // 传进来不是function
                     if (layout.mobile) {
-                        this.app.content.unmask();
+                        document.body.unmask();
                         this.closeWindowOnMobile();
                     } else {
                         if( slience !== true ){
