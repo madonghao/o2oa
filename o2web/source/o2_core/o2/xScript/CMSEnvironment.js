@@ -1834,7 +1834,7 @@ MWF.xScript.CMSEnvironment = function(ev){
         "getApp": function(){return _form.app;},
         "app": _form.app,
         "node": function(){return _form.node;},
-        "readonly": _form.options.readonly,
+        // "readonly": _form.options.readonly,
         "get": function(name,subformName ){
             if( !_form.all )return null;
             if( subformName ){
@@ -2243,7 +2243,12 @@ MWF.xScript.CMSEnvironment = function(ev){
                                 var application;
                                 if (data.work){
                                     var work = data.work;
-                                    var options = {"draft": work, "appId": "process.Work"+(new o2.widget.UUID).toString(), "desktopReload": false};
+                                    var options = {
+                                        "draft": work,
+                                        "draftData":data.data||{},
+                                        "appId": "process.Work"+(new o2.widget.UUID).toString(),
+                                        "desktopReload": false
+                                    };
                                     if( !layout.inBrowser && afterCreated )options.onPostLoadForm = afterCreated;
                                     application = layout.desktop.openApplication(null, "process.Work", options);
                                 }else{
@@ -2282,6 +2287,10 @@ MWF.xScript.CMSEnvironment = function(ev){
             });
         }
     };
+
+    Object.defineProperty(this.form, "readonly", {
+        get: function(){ return  !!_form.options.readonly; }
+    });
 
     this.target = ev.target;
     this.event = ev.event;

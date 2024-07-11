@@ -305,7 +305,23 @@ MWF.xApplication.query.StatementDesigner.LP={
 		"customFilterCondition": "Datos de filtro personalizados",
 		"byScript": "Según el guión",
 		"language": "Paquete lingüístico",
-		"languageInfo": "Devuelve un objeto json que contiene información lingüística; O2.language obtiene información sobre el idioma actual"
+		"languageInfo": "Devuelve un objeto json que contiene información lingüística; O2.language obtiene información sobre el idioma actual",
+		"forceClearCustomViewStyle": "Eliminar estilos personalizados",
+		"export": "Exportar",
+		"exportNotice": "Exportar hasta 2.000 artículos de una sola vez",
+		"exportWidth": "Ancho",
+		"exportEnable": "Permitir la exportación",
+		"isTime": "Tipo de tiempo",
+		"isNumber": "Tipo digital",
+		"viewEnable": "Activar vista",
+		"total": "Total",
+		"notNeeded": "No es necesario",
+		"totalValue": "Valores",
+		"totalCount": "Cantidad",
+		"headText": "Texto de la cabecera",
+		"headStyle": "Estilo de encabezado",
+		"columnTitleStyle": "Estilo de título de columna",
+		"columnContentStyle": "Estilo de contenido de columna"
 	},
 	"viewStyle": {
 		"default": "Estilo predeterminado",
@@ -314,7 +330,8 @@ MWF.xApplication.query.StatementDesigner.LP={
 		"official": "Estilo oficial",
 		"deepBlue": "Estilo de grupo",
 		"blueFlat": "Azul y blanco plano",
-		"greenFlat": "Verde plano"
+		"greenFlat": "Verde plano",
+		"lightBlue": "Estilo azul claro"
 	},
 	"formToolbar": {
 		"save": "Guardar",
@@ -396,6 +413,13 @@ MWF.xApplication.query.StatementDesigner.LP={
 	"filterList": "Condiciones de filtrado",
 	"pageNo": "Número de página",
 	"perPage": "Por Página",
-	"size": "Artículo"
+	"size": "Artículo",
+	"cmsReviewInstance": "Se puede leer (revisión)",
+	"DocumentViewRecord": "Registros de lectura de gestión de contenidos (documentviewrecord)",
+	"documentViewRecord": "Registros de lectura de gestión de contenidos (documentviewrecord)",
+	"documentCommentInfo": "Registros de comentarios de gestión de contenidos (documentmenterinfo)",
+	"cmsReviewInstanceSql": "Gestión de contenidos legible (pp c review)",
+	"documentViewRecordSql": "Registros de lectura de gestión de contenidos (pp c review)",
+	"documentCommentInfoSql": "Registros de comentarios de gestión de contenidos (pp c review)"
 }
 MWF.xApplication.query.StatementDesigner["lp."+o2.language] = MWF.xApplication.query.StatementDesigner.LP

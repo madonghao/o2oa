@@ -242,6 +242,12 @@ MWF.xApplication.attendancev2.LP = {
     monthInfo: "切换月份会自动保存当前月份的数据！",
     copyFromLastMonthBtn: "复制上月排班数据",
     copyConfirmInfo: "确定要复制{month}的数据到当前吗？",
+    downloadExcelTempEmptyShift: "请先选择排班班次！",
+    downloadExcelTempBtn: "下载Excel模板进行排班",
+    uploadExcelBtn: "上传已经排班好的Excel",
+    excelEmptyShift: "--休息--",
+    excelTitle: "{month} 排班表（只能按现有下拉的班次排班，否则无法识别）",
+    excelFileName: "{month}_排班表.xlsx"
   },
   dateCycle: {
     none: "无",
@@ -302,8 +308,8 @@ MWF.xApplication.attendancev2.LP = {
     holidayLabels: "设置节假日，将原本为工作日的日期添加到此处，作为节假日",
     workdays: "工作日",
     workdayLabels: "设置工作日，将原本为非工作日的日期添加到此处，作为工作日",
-    appealConfig: "补卡申请配置",
-    appealEnableLabel: "是否启用补卡申请功能",
+    appealConfig: "异常申诉配置",
+    appealEnableLabel: "是否启用考勤异常申诉功能",
     appealProcessTypeInnerLabel: "内置固定流程",
     appealProcessTypeProcessLabel: "自定义流程",
     appealProcessTypeProcessPlaceholder: "请选择自定义流程",

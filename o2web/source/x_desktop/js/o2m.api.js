@@ -555,8 +555,8 @@
         o2m.util.navigation.openInnerApp
         o2m.util.navigation.openOtherApp
         o2m.util.navigation.openWindow
-  
-  
+        o2m.util.navigation.share
+
   
   * ***** END UTIL BLOCK ******/
 
@@ -1076,6 +1076,47 @@
   this.o2m.util.device.location = _o2m_u_device_location;
 
 
+  //o2m.util.device.localAuth
+  this.o2m.util.device.localAuthSuccess = function (result) {
+    console.log("util device localAuth back, result:" + result);
+  };
+  /**
+   * 移动端生物识别认证
+   * @method localAuth
+   * @memberOf o2m
+   * @o2membercategory util.device
+   * @static
+   * @param {Object} obj  localAuth 需要传入对象
+   * <pre><code class='language-js'>{
+   *  "onSuccess": function,  //成功回调
+   *  "onFail": function, //失败回调
+   * }</code></pre>
+   * @example
+   * o2m.util.device.localAuth({
+   * onSuccess : function(result) {
+   *     // result 是一个 json 字符串
+   *     {
+   *      "value":  false // 是否授权成功
+   *      }
+   *  },
+   *  onFail : function(err) {}
+   *});
+   */
+  this.o2m.util.device.localAuth = function (c) {
+    var onSuccess = c && c.onSuccess ? c.onSuccess : null;
+    var onFail = c && c.onFail ? c.onFail : null;
+    if (onSuccess && typeof onSuccess === "function") {
+      o2m.util.device.localAuthSuccess = onSuccess;
+    }
+    var body = {
+      type: "device.localAuth",
+      callback: "o2m.util.device.localAuthSuccess",
+      data: {}
+    };
+    _util_post(body, onFail);
+  };
+
+
   //o2m.util.navigation.setTitle
   this.o2m.util.navigation.setTitleSuccess = function (result) {
     console.log("util calendar chooseInterval back, result:" + result);
@@ -1193,6 +1234,7 @@
     var portalFlag = c && c.portalFlag ? c.portalFlag : "";
     var portalTitle = c && c.portalTitle ? c.portalTitle : "";
     var portalPage = c && c.portalPage ? c.portalPage : "";
+    var parameters = c && c.parameters ? c.parameters : {};
     var body = {
       type: "navigation.openInnerApp",
       callback: "o2m.util.navigation.openInnerAppSuccess",
@@ -1200,7 +1242,8 @@
         appKey: appKey,
         portalFlag: portalFlag,
         portalTitle: portalTitle,
-        portalPage: portalPage
+        portalPage: portalPage,
+        parameters: parameters
       }
     };
     _util_post(body, onFail);
@@ -1364,6 +1407,44 @@
    *});
    */
   this.o2m.util.navigation.clearCache = _o2m_u_navigation_clearCache;
+
+
+  //o2m.util.navigation.share 分享图片
+  this.o2m.util.navigation.shareSuccess = function (result) {
+    console.log("util navigation share back, result:" + result);
+  };
+  var _o2m_u_navigation_share = function (c) {
+    var onSuccess = c && c.onSuccess ? c.onSuccess : null;
+    var onFail = c && c.onFail ? c.onFail : null;
+    var base64 = c && c.base64 ? c.base64 : "";
+    if (onSuccess && typeof onSuccess === "function") {
+      o2m.util.navigation.shareSuccess = onSuccess;
+    }
+    var body = {
+      type: "navigation.share",
+      callback: "o2m.util.navigation.shareSuccess",
+      data: {
+        base64: base64
+      }
+    };
+    _util_post(body, onFail);
+  };
+
+  /**
+   * 分享图片功能，目前只支持 base64 进行分享
+   * @method share
+   * @memberOf o2m
+   * @o2membercategory util.navigation
+   * @static
+   * @example
+   * o2m.util.navigation.share({
+   * base64: '图片的 base64 编码';
+   * onSuccess : function() {
+   *  },
+   *  onFail : function(err) {}
+   *});
+   */
+  this.o2m.util.navigation.share = _o2m_u_navigation_share;
    
 
 

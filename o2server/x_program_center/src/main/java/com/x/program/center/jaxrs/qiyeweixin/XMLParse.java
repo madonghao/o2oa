@@ -43,7 +43,6 @@ class XMLParse {
 			StringReader sr = new StringReader(xmltext);
 			InputSource is = new InputSource(sr);
 			Document document = db.parse(is);
-
 			Element root = document.getDocumentElement();
 			NodeList nodelist1 = root.getElementsByTagName("Encrypt");
 			NodeList nodelist2 = root.getElementsByTagName("ToUserName");

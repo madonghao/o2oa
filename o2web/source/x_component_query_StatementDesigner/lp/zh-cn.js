@@ -79,6 +79,9 @@ MWF.xApplication.query.StatementDesigner.LP = Object.merge( MWF.xApplication.que
     "workCompletedInstance": "已完成流程实例(WorkCompleted)",
     "reviewInstance": "可阅读(Review)",
     "documentInstance": "内容管理文档(Document)",
+    "cmsReviewInstance": "内容管理可阅读(com.x.cms.core.entity.Review)",
+    "documentViewRecord": "内容管理阅读记录(DocumentViewRecord)",
+    "documentCommentInfo": "内容管理评论记录(DocumentCommentInfo)",
 
     "taskInstanceSql":"待办(PP_C_TASK)",
     "taskCompletedInstanceSql": "已办(PP_C_TASKCOMPLETED)",
@@ -88,6 +91,9 @@ MWF.xApplication.query.StatementDesigner.LP = Object.merge( MWF.xApplication.que
     "workCompletedInstanceSql":"已完成流程实例(PP_C_WORKCOMPLETED)",
     "reviewInstanceSql":"可阅读(PP_C_REVIEW)",
     "documentInstanceSql":"内容管理文档(CMS_DOCUMENT)",
+    "cmsReviewInstanceSql":"内容管理可阅读(CMS_REVIEW)",
+    "documentViewRecordSql":"内容管理阅读记录(CMS_DOCUMENT_VIEWRECORD)",
+    "documentCommentInfoSql":"内容管理评论记录(CMS_DOCUMENT_COMMENTINFO)",
 
     "autoAddColumns": "根据数据表生成列",
 
@@ -133,8 +139,18 @@ MWF.xApplication.query.StatementDesigner.LP = Object.merge( MWF.xApplication.que
         "exportEnable": "允许导出",
         "isTime": "时间类型",
         "isNumber": "数字类型",
-        "viewEnable": "启用视图"
+        "viewEnable": "启用视图",
+        "forceClearCustomViewStyle": "切换时清除自定义样式",
 
+        "total": "合计",
+        "notNeeded": "不需要",
+        "totalValue": "数值",
+        "totalCount": "数量",
+
+        "headText": "表头文本",
+        "headStyle": "表头样式",
+        "columnTitleStyle": "列标题样式",
+        "columnContentStyle": "列内容样式"
     },
     "formToolbar":{
         "save": "保存",

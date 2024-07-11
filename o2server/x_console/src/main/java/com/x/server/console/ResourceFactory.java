@@ -189,14 +189,14 @@ public class ResourceFactory {
 			DruidDataSourceC3P0Adapter dataSource = new DruidDataSourceC3P0Adapter();
 			dataSource.setJdbcUrl(ds.getUrl());
 			dataSource.setDriverClass(ds.getDriverClassName());
-			dataSource.setPreferredTestQuery(SlicePropertiesBuilder.validationQueryOfUrl(ds.getUrl()));
+			//dataSource.setPreferredTestQuery(SlicePropertiesBuilder.validationQueryOfUrl(ds.getUrl()));
 			dataSource.setUser(ds.getUsername());
 			dataSource.setPassword(ds.getPassword());
 			dataSource.setMaxPoolSize(ds.getMaxTotal());
 			dataSource.setMinPoolSize(ds.getMaxIdle());
 			// 增加校验
-			dataSource.setTestConnectionOnCheckin(ds.getTestConnectionOnCheckin());
-			dataSource.setTestConnectionOnCheckout(ds.getTestConnectionOnCheckout());
+			//dataSource.setTestConnectionOnCheckin(ds.getTestConnectionOnCheckin());
+			//dataSource.setTestConnectionOnCheckout(ds.getTestConnectionOnCheckout());
 			dataSource.setMaxIdleTime(ds.getMaxIdleTime());
 			dataSource.setAcquireIncrement(2);
 			DruidDataSource druidDataSource = (DruidDataSource) FieldUtils.readField(dataSource, "dataSource", true);
@@ -250,7 +250,7 @@ public class ResourceFactory {
 					+ ";CACHE_SIZE=" + (entry.getValue().getCacheSize() * 1024);
 			dataSource.setJdbcUrl(url);
 			dataSource.setDriverClass(SlicePropertiesBuilder.driver_h2);
-			dataSource.setPreferredTestQuery(SlicePropertiesBuilder.validationQueryOfUrl(url));
+			//dataSource.setPreferredTestQuery(SlicePropertiesBuilder.validationQueryOfUrl(url));
 			dataSource.setUser(H2Tools.USER);
 			dataSource.setPassword(Config.token().getPassword());
 			dataSource.setMaxPoolSize(entry.getValue().getMaxTotal());
