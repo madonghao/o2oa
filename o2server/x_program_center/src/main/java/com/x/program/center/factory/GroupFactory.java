@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 
 import com.x.organization.core.entity.Group;
 import com.x.organization.core.entity.Group_;
+import com.x.organization.core.entity.Person;
 import com.x.program.center.AbstractFactory;
 import com.x.program.center.Business;
 
@@ -73,4 +74,8 @@ public class GroupFactory extends AbstractFactory {
 		return this.entityManagerContainer().list(Group.class, ids);
 	}
 
+	public List<Group> listSupDirectWithPersonObject(Person person) throws Exception {
+		List<String> ids = this.listSupDirectWithPerson(person.getId());
+		return this.entityManagerContainer().list(Group.class, ids);
+	}
 }

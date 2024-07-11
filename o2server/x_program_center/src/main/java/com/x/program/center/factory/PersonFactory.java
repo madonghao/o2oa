@@ -94,6 +94,20 @@ public class PersonFactory extends AbstractFactory {
 		}
 	}
 
+	public Person getWithYunzhijiaIdObject(String yunzhijiaId) throws Exception {
+		EntityManager em = this.entityManagerContainer().get(Person.class);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Person> cq = cb.createQuery(Person.class);
+		Root<Person> root = cq.from(Person.class);
+		Predicate p = cb.equal(root.get(Person_.yunzhijiaId), yunzhijiaId);
+		List<Person> os = em.createQuery(cq.select(root).where(p)).setMaxResults(1).getResultList();
+		if (os.isEmpty()) {
+			return null;
+		} else {
+			return os.get(0);
+		}
+	}
+
 	public void setPassword(Person person, String password) throws Exception {
 		Calendar cal = Calendar.getInstance();
 		person.setChangePasswordTime(null);

@@ -45,6 +45,7 @@ import com.x.program.center.jaxrs.validation.ValidationAction;
 import com.x.program.center.jaxrs.warnlog.WarnLogAction;
 import com.x.program.center.jaxrs.welink.WeLinkAction;
 import com.x.program.center.jaxrs.zhengwudingding.ZhengwuDingdingAction;
+import com.x.program.center.jaxrs.yunzhijia.YunzhijiaAction;
 
 @ApplicationPath("jaxrs")
 public class ActionApplication extends AbstractActionApplication {
@@ -73,6 +74,7 @@ public class ActionApplication extends AbstractActionApplication {
 		classes.add(WeLinkAction.class);
 		classes.add(ZhengwuDingdingAction.class);
 		classes.add(QiyeweixinAction.class);
+		classes.add(YunzhijiaAction.class);
 		classes.add(ScheduleAction.class);
 		classes.add(AuthenticationAction.class);
 		classes.add(ValidationAction.class);

@@ -812,6 +812,20 @@ public class Person extends SliceJpaObject {
 		this.qiyeweixinHash = qiyeweixinHash;
 	}
 
+	public String getYunzhijiaId() {
+		return yunzhijiaId;
+	}
+
+	public void setYunzhijiaId(String yunzhijiaId) { this.yunzhijiaId = yunzhijiaId; }
+
+	public String getYunzhijiaHash() {
+		return yunzhijiaHash;
+	}
+
+	public void setYunzhijiaHash(String yunzhijiaHash) {
+		this.yunzhijiaHash = yunzhijiaHash;
+	}
+
 	public String getZhengwuDingdingId() {
 		return zhengwuDingdingId;
 	}

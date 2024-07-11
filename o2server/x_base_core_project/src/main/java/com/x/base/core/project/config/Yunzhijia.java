@@ -19,6 +19,10 @@ public class Yunzhijia extends ConfigObject {
 
     @FieldDescribe("是否启用.")
     private Boolean enable;
+    @FieldDescribe("回调信号触发同步检查,默认每10分钟运行一次,如果期间内有企业微信回调信号接收到,那么触发同步任务进行人员同步.")
+    private String syncCron;
+    @FieldDescribe("强制拉入同步cron,默认在每天的8点和12点强制进行同步.")
+    private String forceSyncCron;
     @FieldDescribe("api服务器地址")
     private String apiAddress;
     @FieldDescribe("云之家AppSecret")
@@ -43,6 +47,8 @@ public class Yunzhijia extends ConfigObject {
     public static Yunzhijia defaultInstance() { return new Yunzhijia(); }
 
     public static final Boolean default_enable = false;
+    public static final String default_syncCron = "10 0/10 * * * ?";
+    public static final String default_forceSyncCron = "10 45 8,12 * * ?";
     public static final String default_apiAddress = "https://yunzhijia.com";
     public static final String default_appSecret = "";
     public static final String default_addressBookSecret = "";
@@ -56,6 +62,8 @@ public class Yunzhijia extends ConfigObject {
 
     public Yunzhijia() {
         this.enable = default_enable;
+        this.syncCron = default_syncCron;
+        this.forceSyncCron = default_forceSyncCron;
         this.apiAddress = default_apiAddress;
         this.appId = default_appId;
         this.eid = default_eid;
@@ -95,6 +103,11 @@ public class Yunzhijia extends ConfigObject {
     public String getSignKey() {
         return StringUtils.isEmpty(this.signKey) ? default_signKey : this.signKey;
     }
+
+    // 清空表达式 不执行同步操作
+    public String getSyncCron() { return this.syncCron; }
+
+    public String getForceSyncCron() { return this.forceSyncCron; }
 
     public String getEid() { return StringUtils.isEmpty(this.eid) ? default_eid : this.eid; }
 

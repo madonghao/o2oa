@@ -11,12 +11,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.x.organization.core.entity.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.x.base.core.project.tools.ListTools;
-import com.x.organization.core.entity.PersistenceProperties;
-import com.x.organization.core.entity.Unit;
-import com.x.organization.core.entity.Unit_;
 import com.x.program.center.AbstractFactory;
 import com.x.program.center.Business;
 
@@ -94,6 +92,29 @@ public class UnitFactory extends AbstractFactory {
 		} else {
 			return os.get(0);
 		}
+	}
+
+	public Unit getWithYunzhijiaIdObject(String yunzhijiaId) throws Exception {
+		EntityManager em = this.entityManagerContainer().get(Unit.class);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Unit> cq = cb.createQuery(Unit.class);
+		Root<Unit> root = cq.from(Unit.class);
+		Predicate p = cb.equal(root.get(Unit_.yunzhijiaId), yunzhijiaId);
+		List<Unit> os = em.createQuery(cq.select(root).where(p)).setMaxResults(1).getResultList();
+		if (os.isEmpty()) {
+			return null;
+		} else {
+			return os.get(0);
+		}
+	}
+
+	public List<UnitDuty> listObjByIdentity(String identityId) throws Exception {
+		EntityManager em = this.entityManagerContainer().get(UnitDuty.class);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<UnitDuty> cq = cb.createQuery(UnitDuty.class);
+		Root<UnitDuty> root = cq.from(UnitDuty.class);
+		Predicate p = cb.isMember(identityId, root.get(UnitDuty_.identityList));
+		return em.createQuery(cq.select(root).where(p)).getResultList();
 	}
 
 	public void adjustInherit(Unit unit) throws Exception {

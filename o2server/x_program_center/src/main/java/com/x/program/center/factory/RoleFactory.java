@@ -21,12 +21,20 @@ public class RoleFactory extends AbstractFactory {
 
 
   public List<Role> listRoleByPersonId(String personId) throws Exception {
-    EntityManager em = this.entityManagerContainer().get(Role.class);
+	EntityManager em = this.entityManagerContainer().get(Role.class);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Role> cq = cb.createQuery(Role.class);
 		Root<Role> root = cq.from(Role.class);
 		Predicate p = cb.isMember(personId, root.get(Role_.personList));
 		return em.createQuery(cq.where(p)).getResultList();
   }
-  
+
+	public List<Role> listObjByPerson(String personId) throws Exception {
+		EntityManager em = this.entityManagerContainer().get(Role.class);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Role> cq = cb.createQuery(Role.class);
+		Root<Role> root = cq.from(Role.class);
+		Predicate p = cb.isMember(personId, root.get(Role_.personList));
+		return em.createQuery(cq.select(root).where(p)).getResultList();
+	}
 }

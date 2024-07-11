@@ -234,6 +234,13 @@ public class Unit extends SliceJpaObject {
 	@CheckPersist(allowEmpty = true)
 	private String qiyeweixinId;
 
+	public static final String yunzhijiaId_FIELDNAME = "yunzhijiaId";
+	@FieldDescribe("云之家ID.")
+	@Column(length = length_255B, name = ColumnNamePrefix + yunzhijiaId_FIELDNAME)
+	@Index(name = TABLE + IndexNameMiddle + yunzhijiaId_FIELDNAME)
+	@CheckPersist(allowEmpty = true)
+	private String yunzhijiaId;
+
 	public static final String zhengwuDingdingId_FIELDNAME = "zhengwuDingdingId";
 	@FieldDescribe("政务钉钉人员ID.")
 	@Column(length = length_255B, name = ColumnNamePrefix + zhengwuDingdingId_FIELDNAME)
@@ -261,6 +268,13 @@ public class Unit extends SliceJpaObject {
 	@Index(name = TABLE + IndexNameMiddle + qiyeweixinHash_FIELDNAME)
 	@CheckPersist(allowEmpty = true)
 	private String qiyeweixinHash;
+
+	public static final String yunzhijiaHash_FIELDNAME = "yunzhijiaHash";
+	@FieldDescribe("云之家人员哈希特征.")
+	@Column(length = length_255B, name = ColumnNamePrefix + yunzhijiaHash_FIELDNAME)
+	@Index(name = TABLE + IndexNameMiddle + yunzhijiaHash_FIELDNAME)
+	@CheckPersist(allowEmpty = true)
+	private String yunzhijiaHash;
 
 	public static final String andFxHash_FIELDNAME = "andFxHash";
 	@FieldDescribe("移动办公组织哈希特征.")
@@ -403,6 +417,14 @@ public class Unit extends SliceJpaObject {
 		this.qiyeweixinId = qiyeweixinId;
 	}
 
+	public String getYunzhijiaId() {
+		return yunzhijiaId;
+	}
+
+	public void setYunzhijiaId(String yunzhijiaId) {
+		this.yunzhijiaId = yunzhijiaId;
+	}
+
 	public String getQiyeweixinHash() {
 		return qiyeweixinHash;
 	}
@@ -410,6 +432,12 @@ public class Unit extends SliceJpaObject {
 	public void setQiyeweixinHash(String qiyeweixinHash) {
 		this.qiyeweixinHash = qiyeweixinHash;
 	}
+
+	public String getYunzhijiaHash() {
+		return yunzhijiaHash;
+	}
+
+	public void setYunzhijiaHash(String yunzhijiaHash) { this.yunzhijiaHash = yunzhijiaHash; }
 
 	public String getZhengwuDingdingId() {
 		return zhengwuDingdingId;

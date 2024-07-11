@@ -4,28 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
+import com.x.program.center.schedule.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.x.base.core.project.ApplicationForkJoinWorkerThreadFactory;
 import com.x.base.core.project.cache.CacheManager;
 import com.x.base.core.project.config.Config;
-import com.x.program.center.schedule.AndFxSyncOrganization;
-import com.x.program.center.schedule.Area;
-import com.x.program.center.schedule.Cleanup;
-import com.x.program.center.schedule.CleanupCode;
-import com.x.program.center.schedule.CollectLog;
-import com.x.program.center.schedule.CollectPerson;
-import com.x.program.center.schedule.DingdingSyncOrganization;
-import com.x.program.center.schedule.DingdingSyncOrganizationTrigger;
-import com.x.program.center.schedule.FireSchedule;
-import com.x.program.center.schedule.QiyeweixinSyncOrganization;
-import com.x.program.center.schedule.QiyeweixinSyncOrganizationTrigger;
-import com.x.program.center.schedule.TriggerAgent;
-import com.x.program.center.schedule.WeLinkSyncOrganization;
-import com.x.program.center.schedule.WeLinkSyncOrganizationTrigger;
-import com.x.program.center.schedule.ZhengwuDingdingSyncOrganization;
-import com.x.program.center.schedule.ZhengwuDingdingSyncOrganizationTrigger;
 
 public class ThisApplication {
 
@@ -59,6 +44,8 @@ public class ThisApplication {
 
 	public static final List<Object> qiyeweixinSyncOrganizationCallbackRequest = new ArrayList<>();
 
+	public static final List<Object> yunzhijiaSyncOrganizationCallbackRequest = new ArrayList<>();
+
 	public static void init() {
 		try {
 			CacheManager.init(context.clazz().getSimpleName());
@@ -81,6 +68,15 @@ public class ThisApplication {
 				// 添加一个强制同步任务
 				context().scheduleLocal(QiyeweixinSyncOrganizationTrigger.class,
 						Config.qiyeweixin().getForceSyncCron());
+			}
+			// 云之家拉入同步
+			if (BooleanUtils.isTrue(Config.yunzhijia().getEnable())
+					&& StringUtils.isNotBlank(Config.yunzhijia().getForceSyncCron())) {
+				// 启动同步任务
+				context().scheduleLocal(YunzhijiaSyncOrganization.class, Config.yunzhijia().getSyncCron());
+				// 添加一个强制同步任务
+				context().scheduleLocal(YunzhijiaSyncOrganizationTrigger.class,
+						Config.yunzhijia().getForceSyncCron());
 			}
 			// 钉钉同步
 			if (BooleanUtils.isTrue(Config.dingding().getEnable())
