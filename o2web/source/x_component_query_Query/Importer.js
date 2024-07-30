@@ -770,7 +770,7 @@ MWF.xApplication.query.Query.Importer = MWF.QImporter = new Class(
             if( !this.importerJson ){
                 this.getImporterJSON( function () {
                     exportTo();
-                }.bind(this));
+                }.bind(this))
             }else{
                 exportTo();
             }

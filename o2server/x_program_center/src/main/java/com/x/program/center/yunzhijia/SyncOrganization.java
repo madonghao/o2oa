@@ -432,6 +432,7 @@ public class SyncOrganization {
         person.setMobile(user.getPhone());
         person.setMail(user.getEmail());
         person.setStatus(user.getStatus());
+        person.setGenderType(Objects.equals("1", user.getGender()) ? GenderType.m : GenderType.f);
         // person.setUnique(user.getUnique());
         // person.setOfficePhone(user.getTelephone());
         emc.check(person, CheckPersistType.all);
@@ -520,7 +521,8 @@ public class SyncOrganization {
                 if (order != null) {
                     identity.setOrderNumber(order.intValue());
                 }
-                identity.setUnique(unit.getUnique());
+                // 不更新唯一编码
+                // identity.setUnique(unit.getUnique());
                 emc.commit();
                 result.getUpdateIdentityList().add(identity.getDistinguishedName());
             }

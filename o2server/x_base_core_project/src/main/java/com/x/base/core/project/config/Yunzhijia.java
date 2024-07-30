@@ -43,6 +43,12 @@ public class Yunzhijia extends ConfigObject {
     private Boolean messageEnable;
     @FieldDescribe("云之家扫码登录")
     private Boolean scanLoginEnable;
+    @FieldDescribe("sHR数据库服务器URL")
+    private String shrDBUrl;
+    @FieldDescribe("sHR数据库登录账号")
+    private String shrDBUser;
+    @FieldDescribe("sHR数据库登录密码")
+    private String shrDBPassword;
 
     public static Yunzhijia defaultInstance() { return new Yunzhijia(); }
 
@@ -59,6 +65,9 @@ public class Yunzhijia extends ConfigObject {
     public static final String default_messageRedirectPortal = "";
     public static final Boolean default_messageEanble = false;
     public static final Boolean default_scanLoginEnable = false;
+    public static final String default_shrDBUrl = "";
+    public static final String default_shrDBUser = "";
+    public static final String default_shrDBPassword = "";
 
     public Yunzhijia() {
         this.enable = default_enable;
@@ -74,6 +83,9 @@ public class Yunzhijia extends ConfigObject {
         this.workUrl = default_workUrl;
         this.messageRedirectPortal = default_messageRedirectPortal;
         this.scanLoginEnable = default_scanLoginEnable;
+        this.shrDBUrl = default_shrDBUrl;
+        this.shrDBUser = default_shrDBUser;
+        this.shrDBPassword = default_shrDBPassword;
     }
 
     private static String cachedCorpAccessToken;
@@ -103,6 +115,12 @@ public class Yunzhijia extends ConfigObject {
     public String getSignKey() {
         return StringUtils.isEmpty(this.signKey) ? default_signKey : this.signKey;
     }
+
+    public String getShrDBUrl() { return shrDBUrl; }
+
+    public String getShrDBUser() { return shrDBUser; }
+
+    public String getShrDBPassword() { return shrDBPassword; }
 
     // 清空表达式 不执行同步操作
     public String getSyncCron() { return this.syncCron; }

@@ -1,9 +1,6 @@
 package com.x.program.center.yunzhijia;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,36 +29,62 @@ public class YunzhijiaFactory {
         orgs = this.orgs();
         users = this.users();
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String dbUrl = "jdbc:sqlserver://10.0.62.211:1433;databaseName=sHRMaster";
-        String dbUser = "sa";
-        String dbPwd = "Ykpbg9c.";
-        Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
-        Statement userStmt = conn.createStatement();
-        Statement unitStmt = conn.createStatement();
+
+        String dbUrl = "jdbc:sqlserver://" + Config.yunzhijia().getShrDBUrl() + ":1433;databaseName=sHRMaster";
+        String dbUser = Config.yunzhijia().getShrDBUser();
+        String dbPwd = Config.yunzhijia().getShrDBPassword();
+
+        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd)) {
+            Map<String, String> userMap = getUserMap(conn);
+            Map<String, String> unitMap = getUnitMap(conn);
+
+            updateUserInfo(userMap);
+            updateOrgInfo(unitMap);
+        }
+        users = ListTools.trim(users, true, true);
+        companys = this.companys();
+    }
+
+    private Map<String, String> getUserMap(Connection conn) throws SQLException {
         String userSql = "SELECT FNumber, FUid, FCell FROM T_PM_User WHERE FCell IS NOT NULL AND FIsDelete = '0'";
-        String unitSql = "SELECT FNumber, FDisplayName_L2 FROM T_ORG_Admin UNION SELECT FNumber, FDisplayName_L2 FROM Custom_ST_Unit";
-        ResultSet userResultSet = userStmt.executeQuery(userSql);
-        ResultSet unitResultSet = unitStmt.executeQuery(unitSql);
         Map<String, String> userMap = new HashMap<>();
+
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(userSql)) {
+            while (rs.next()) {
+                String num = rs.getString("FNumber");
+                String cell = rs.getString("FCell");
+                userMap.put(cell, num);
+            }
+        }
+
+        return userMap;
+    }
+
+    private Map<String, String> getUnitMap(Connection conn) throws SQLException {
+        String unitSql = "SELECT FNumber, FDisplayName_L2 FROM T_ORG_Admin UNION SELECT FNumber, FDisplayName_L2 FROM Custom_ST_Unit";
         Map<String, String> unitMap = new HashMap<>();
-        while (userResultSet.next()) {
-            String num = userResultSet.getString("FNumber");
-            String cell = userResultSet.getString("FCell");
-            userMap.put(cell, num);
+
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(unitSql)) {
+            while (rs.next()) {
+                String num = rs.getString("FNumber");
+                String uid = rs.getString("FDisplayName_L2").replaceFirst("盛腾集团_", "");
+                unitMap.put(uid, num);
+            }
         }
-        while (unitResultSet.next()) {
-            String num = unitResultSet.getString("FNumber");
-            String uid = unitResultSet.getString("FDisplayName_L2").replaceFirst("盛腾集团_", "");
-            unitMap.put(uid, num);
-        }
-        userResultSet.close();
-        unitResultSet.close();
+
+        return unitMap;
+    }
+
+    private void updateUserInfo(Map<String, String> userMap) {
         for (User user : users) {
             String fNumber = userMap.get(user.getPhone());
             if (fNumber != null) {
                 user.setUnique(fNumber);
             }
         }
+    }
+
+    private void updateOrgInfo(Map<String, String> unitMap) {
         for (Department org : orgs) {
             String tempStr = org.getDepartment().replace("\\", "_");
             String fNumber = unitMap.get(tempStr);
@@ -69,8 +92,6 @@ public class YunzhijiaFactory {
                 org.setUnique(fNumber);
             }
         }
-        users = ListTools.trim(users, true, true);
-        companys = this.companys();
     }
 
     public List<Department> getOrgs(){ return this.orgs; }

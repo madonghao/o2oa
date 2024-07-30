@@ -373,18 +373,18 @@ o2.xDesktop.Default = new Class({
         taskitem.textNode.click();
     },
     loadDefaultLnk: function(){
-        if (this.status && this.status.flatLnks && this.status.flatLnks.length){
-            this.status.flatLnks.each(function(lnkJson){
-                //console.log(lnkJson.name)
-                this.addLnk(lnkJson);
-            }.bind(this));
-        }else{
+        // if (this.status && this.status.flatLnks && this.status.flatLnks.length){
+        //     this.status.flatLnks.each(function(lnkJson){
+        //         //console.log(lnkJson.name)
+        //         this.addLnk(lnkJson);
+        //     }.bind(this));
+        // }else{
             o2.JSON.get(this.path+"defaultLnk.json", function(defaultLnk){
                 defaultLnk.each(function(lnkJson){
                     this.addLnk(lnkJson);
                 }.bind(this));
             }.bind(this));
-        }
+        // }
     },
     loadMenuData: function(callback){
         this.menuData = this.status.menuData;
@@ -1869,8 +1869,8 @@ o2.xDesktop.Default.StartMenu.Item = new Class({
     },
     setEvent: function(){
         this.node.addEvents({
-            "mouseover": function(){ this.badgeNode.fade("in"); }.bind(this),
-            "mouseout": function(){ this.badgeNode.fade("out"); }.bind(this),
+            // "mouseover": function(){ this.badgeNode.fade("in"); }.bind(this),
+            // "mouseout": function(){ this.badgeNode.fade("out"); }.bind(this),
             "click": function(e){
                 //this.menu.hide(function(){
                 this.open(e);
@@ -1878,12 +1878,12 @@ o2.xDesktop.Default.StartMenu.Item = new Class({
             }.bind(this)
         });
 
-        this.badgeNode.addEvent("click", function(e){
-            this.addLnk();
-            e.stopPropagation();
-        }.bind(this));
+        // this.badgeNode.addEvent("click", function(e){
+        //     this.addLnk();
+        //     e.stopPropagation();
+        // }.bind(this));
 
-        this.makeLnk();
+        // this.makeLnk();
     },
     addLnk: function(dragTargetLnk, dragPosition){
         debugger;
@@ -2929,6 +2929,7 @@ o2.xDesktop.Default.Lnk = new Class({
         }
         this.iconNode = new Element("div.layout_menu_lnk_item_icon").inject(this.node);
         this.textNode = new Element("div.layout_menu_lnk_item_text", {"text": this.data.title}).inject(this.node);
+        this.textNode.fade("in");
         this.actionNode = new Element("div.layout_menu_lnk_item_action", {"title": o2.LP.desktop.deleteLnk}).inject(this.node);
         this.actionNode.addClass("icon_off_light");
 
@@ -2955,17 +2956,17 @@ o2.xDesktop.Default.Lnk = new Class({
                 }else{
                     layout.openApplication(null, this.data.name, this.data.options);
                 }
-            }.bind(this),
-            "mouseover": function(){
-                this.actionNode.fade("in");
-                this.node.addClass("overColor_bg");
-                this.textNode.fade("in");
-            }.bind(this),
-            "mouseout": function(){
-                this.actionNode.fade("out");
-                this.node.removeClass("overColor_bg");
-                this.textNode.fade("out");
             }.bind(this)
+            // "mouseover": function(){
+            //     this.actionNode.fade("in");
+            //     this.node.addClass("overColor_bg");
+            //     this.textNode.fade("in");
+            // }.bind(this),
+            // "mouseout": function(){
+            //     this.actionNode.fade("out");
+            //     this.node.removeClass("overColor_bg");
+            //     this.textNode.fade("out");
+            // }.bind(this)
         });
         this.actionNode.addEvents({
             "click": function(e){
@@ -2979,14 +2980,14 @@ o2.xDesktop.Default.Lnk = new Class({
                 this.actionNode.removeClass("layout_menu_lnk_item_action_shadow");
             }.bind(this)
         });
-        var drag = new Drag(this.node, {
-            "stopPropagation": true,
-            "compensateScroll": true,
-            "onStart": function(el, e){
-                this.doDragMove(e);
-                drag.stop();
-            }.bind(this)
-        });
+        // var drag = new Drag(this.node, {
+        //     "stopPropagation": true,
+        //     "compensateScroll": true,
+        //     "onStart": function(el, e){
+        //         this.doDragMove(e);
+        //         drag.stop();
+        //     }.bind(this)
+        // });
     },
     getDragNode: function(){
         if (!this.dragNode){

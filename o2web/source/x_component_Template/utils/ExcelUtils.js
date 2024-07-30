@@ -307,25 +307,6 @@ MWF.xApplication.Template.utils.ExcelUtils = new Class({
                     sheet.mergeCells(startColName+starRowIndex+':'+endColName+endRowIndex);
                 }
             }
-        }.bind(this));
-    },
-    downloadExcel: function(workbook, fileName, callback){
-        workbook.xlsx.writeBuffer().then(function(buffer){
-            var blob = new Blob([buffer]);
-            this._openDownloadDialog(blob, fileName + ".xlsx", callback);
-        }.bind(this));
-    },
-    appendDataToSheet: function (sheet, array, colWidthArr, dateIndexArray, numberIndexArray){
-        var titleRow = sheet.getRow(1);
-        var titleArray = array.shift();
-        titleArray.each( function( title, i ){
-            sheet.getColumn(i+1).width = colWidthArr[i] ? (colWidthArr[i] / 10) : 20;
-            var cell = titleRow.getCell(i+1);
-            cell.value = o2.typeOf(title) === 'object' ? title.text : title;
-            cell.font = { name: '宋体', family: 4, size: 12, bold: true };
-            // cell.fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'FFFFFF'} };
-            cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-        });
 
         }
 
