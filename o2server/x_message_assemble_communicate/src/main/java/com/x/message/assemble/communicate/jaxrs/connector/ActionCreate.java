@@ -111,6 +111,9 @@ class ActionCreate extends BaseAction {
 		case MessageConnector.CONSUME_QIYEWEIXIN:
 			message = this.v3QiyeweixinMessage(wi, consumer);
 			break;
+		case MessageConnector.CONSUME_YUNZHIJIA:
+			message = this.v3YunzhijiaMessage(wi, consumer);
+			break;
 		case MessageConnector.CONSUME_WELINK:
 			message = this.v3WeLinkMessage(wi, consumer);
 			break;
@@ -253,6 +256,19 @@ class ActionCreate extends BaseAction {
 		try {
 			if (BooleanUtils.isTrue(Config.qiyeweixin().getEnable())
 					&& BooleanUtils.isTrue(Config.qiyeweixin().getMessageEnable())) {
+				message = this.v3Message(wi, consumer);
+			}
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		return message;
+	}
+
+	private Message v3YunzhijiaMessage(Wi wi, Consumer consumer) {
+		Message message = null;
+		try {
+			if (BooleanUtils.isTrue(Config.yunzhijia().getEnable())
+					&& BooleanUtils.isTrue(Config.yunzhijia().getMessageEnable())) {
 				message = this.v3Message(wi, consumer);
 			}
 		} catch (Exception e) {
@@ -410,6 +426,9 @@ class ActionCreate extends BaseAction {
 				break;
 			case MessageConnector.CONSUME_QIYEWEIXIN:
 				ThisApplication.qiyeweixinConsumeQueue.send(message);
+				break;
+			case MessageConnector.CONSUME_YUNZHIJIA:
+				ThisApplication.yunzhijiaConsumeQueue.send(message);
 				break;
 			case MessageConnector.CONSUME_PMS_INNER:
 				ThisApplication.pmsinnerConsumeQueue.send(message);

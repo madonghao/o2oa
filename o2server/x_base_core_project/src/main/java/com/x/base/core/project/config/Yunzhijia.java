@@ -27,6 +27,10 @@ public class Yunzhijia extends ConfigObject {
     private String apiAddress;
     @FieldDescribe("云之家AppSecret")
     private String appSecret;
+    @FieldDescribe("公共号账号")
+    private String pub;
+    @FieldDescribe("公共号Secret")
+    private String pubSecret;
     @FieldDescribe("通讯录Secret")
     private String addressBookSecret;
     @FieldDescribe("云之家AppID")
@@ -57,6 +61,8 @@ public class Yunzhijia extends ConfigObject {
     public static final String default_forceSyncCron = "10 45 8,12 * * ?";
     public static final String default_apiAddress = "https://yunzhijia.com";
     public static final String default_appSecret = "";
+    public static final String default_pub = "";
+    public static final String default_pubSecret = "";
     public static final String default_addressBookSecret = "";
     public static final String default_appId = "";
     public static final String default_eid = "";
@@ -77,6 +83,8 @@ public class Yunzhijia extends ConfigObject {
         this.appId = default_appId;
         this.eid = default_eid;
         this.appSecret = default_appSecret;
+        this.pub = default_pub;
+        this.pubSecret = default_pubSecret;
         this.addressBookSecret = default_addressBookSecret;
         this.signKey = default_signKey;
         this.messageEnable = default_messageEanble;
@@ -104,12 +112,26 @@ public class Yunzhijia extends ConfigObject {
         return BooleanUtils.isTrue(this.messageEnable);
     }
 
+    public String getMessageRedirectPortal() {
+        return messageRedirectPortal;
+    }
+
+    public void setMessageRedirectPortal(String messageRedirectPortal) {
+        this.messageRedirectPortal = messageRedirectPortal;
+    }
+
     public String getWorkUrl() { return StringUtils.isEmpty(this.workUrl) ? default_workUrl : this.workUrl; }
 
     public String getAppId() { return StringUtils.isEmpty(this.appId) ? default_appId : this.appId; }
 
     public String getAppSecret() {
         return StringUtils.isEmpty(this.appSecret) ? default_appSecret : this.appSecret;
+    }
+
+    public String getPub() { return StringUtils.isEmpty(this.pub) ? default_pub : this.pub; }
+
+    public String getPubSecret() {
+        return StringUtils.isEmpty(this.pubSecret) ? default_pubSecret : this.pubSecret;
     }
 
     public String getSignKey() {

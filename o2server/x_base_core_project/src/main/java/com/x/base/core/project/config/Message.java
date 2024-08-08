@@ -135,6 +135,8 @@ public class Message extends GsonPropertyObject {
 			return new ZhengwudingdingConsumer();
 		case MessageConnector.CONSUME_QIYEWEIXIN:
 			return new QiyeweixinConsumer();
+		case MessageConnector.CONSUME_YUNZHIJIA:
+			return new YunzhijiaConsumer();
 		case MessageConnector.CONSUME_MPWEIXIN:
 			return new MpweixinConsumer();
 		case MessageConnector.CONSUME_KAFKA:
@@ -234,6 +236,16 @@ public class Message extends GsonPropertyObject {
 
 		public QiyeweixinConsumer() {
 			super(MessageConnector.CONSUME_QIYEWEIXIN, true);
+		}
+
+	}
+
+	public static class YunzhijiaConsumer extends Consumer {
+
+		private static final long serialVersionUID = -3957612144231971035L;
+
+		public YunzhijiaConsumer() {
+			super(MessageConnector.CONSUME_YUNZHIJIA, true);
 		}
 
 	}

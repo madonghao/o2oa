@@ -1368,6 +1368,7 @@ MWF.xApplication.systemconfig.LP={
 			"dingding": "DingDing",
 			"welink": "WeLink",
 			"qiyeweixin": "WeChat Empresarial",
+			"yunzhijia": "Yunzhijia",
 			"mpweixin": "Cuenta pública de WeChat",
 			"kafka": "Kafka",
 			"activemq": "ActiveMQ",

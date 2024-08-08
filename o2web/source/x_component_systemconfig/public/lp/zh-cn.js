@@ -1634,6 +1634,7 @@ o2.xApplication.systemconfig.LP = {
             "dingding": "钉钉",
             "welink": "welink",
             "qiyeweixin": "企业微信",
+            "yunzhijia": "云之家",
             "mpweixin": "微信公众号",
             "kafka": "kafka",
             "activemq": "ActiveMQ",

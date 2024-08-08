@@ -50,6 +50,8 @@ public class Person extends GsonPropertyObject {
 	private Integer age;
 	@FieldDescribe("企业微信Id")
 	private String qiyeweixinId;
+	@FieldDescribe("云之家Id")
+	private String yunzhijiaId;
 	@FieldDescribe("钉钉Id")
 	private String dingdingId;
 	@FieldDescribe("政务钉钉Id")
@@ -257,5 +259,13 @@ public class Person extends GsonPropertyObject {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getYunzhijiaId() {
+		return yunzhijiaId;
+	}
+
+	public void setYunzhijiaId(String yunzhijiaId) {
+		this.yunzhijiaId = yunzhijiaId;
 	}
 }

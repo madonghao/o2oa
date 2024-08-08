@@ -32,6 +32,8 @@ public class ThisApplication {
 
 	public static final QiyeweixinConsumeQueue qiyeweixinConsumeQueue = new QiyeweixinConsumeQueue();
 
+	public static final YunzhijiaConsumeQueue yunzhijiaConsumeQueue = new YunzhijiaConsumeQueue();
+
 	public static final ZhengwudingdingConsumeQueue zhengwudingdingConsumeQueue = new ZhengwudingdingConsumeQueue();
 
 	public static final DingdingConsumeQueue dingdingConsumeQueue = new DingdingConsumeQueue();
@@ -94,6 +96,10 @@ public class ThisApplication {
 		if (BooleanUtils.isTrue(Config.qiyeweixin().getEnable())
 				&& BooleanUtils.isTrue(Config.qiyeweixin().getMessageEnable())) {
 			context().startQueue(qiyeweixinConsumeQueue);
+		}
+		if (BooleanUtils.isTrue(Config.yunzhijia().getEnable())
+				&& BooleanUtils.isTrue(Config.yunzhijia().getMessageEnable())) {
+			context().startQueue(yunzhijiaConsumeQueue);
 		}
 		if (BooleanUtils.isTrue(Config.zhengwuDingding().getEnable())
 				&& BooleanUtils.isTrue(Config.zhengwuDingding().getMessageEnable())) {

@@ -214,6 +214,8 @@ public class MessageConnector {
 
     public static final String CONSUME_QIYEWEIXIN = "qiyeweixin";
 
+    public static final String CONSUME_YUNZHIJIA = "yunzhijia";
+
     public static final String CONSUME_MPWEIXIN = "mpweixin"; // 微信公众号
 
     public static final String CONSUME_KAFKA = "kafka";

@@ -27,6 +27,7 @@ import com.x.base.core.project.config.Message.MailConsumer;
 import com.x.base.core.project.config.Message.MpweixinConsumer;
 import com.x.base.core.project.config.Message.PmsinnerConsumer;
 import com.x.base.core.project.config.Message.QiyeweixinConsumer;
+import com.x.base.core.project.config.Message.YunzhijiaConsumer;
 import com.x.base.core.project.config.Message.RestfulConsumer;
 import com.x.base.core.project.config.Message.TableConsumer;
 import com.x.base.core.project.config.Message.WelinkConsumer;
@@ -41,7 +42,7 @@ public class Messages extends ConfigObject {
 
     private static final Message MESSAGE_ALL = new Message(MessageConnector.CONSUME_WS,
             MessageConnector.CONSUME_PMS_INNER, MessageConnector.CONSUME_DINGDING, MessageConnector.CONSUME_WELINK,
-            MessageConnector.CONSUME_ZHENGWUDINGDING, MessageConnector.CONSUME_QIYEWEIXIN,
+            MessageConnector.CONSUME_ZHENGWUDINGDING, MessageConnector.CONSUME_QIYEWEIXIN,MessageConnector.CONSUME_YUNZHIJIA,
             MessageConnector.CONSUME_MPWEIXIN, MessageConnector.CONSUME_CALENDAR, MessageConnector.CONSUME_KAFKA,
             MessageConnector.CONSUME_ACTIVEMQ, MessageConnector.CONSUME_RESTFUL, MessageConnector.CONSUME_MAIL,
             MessageConnector.CONSUME_API, MessageConnector.CONSUME_JDBC, MessageConnector.CONSUME_TABLE,
@@ -49,7 +50,7 @@ public class Messages extends ConfigObject {
 
     private static final Message MESSAGE_NOTICE = new Message(MessageConnector.CONSUME_WS,
             MessageConnector.CONSUME_PMS_INNER, MessageConnector.CONSUME_DINGDING, MessageConnector.CONSUME_WELINK,
-            MessageConnector.CONSUME_ZHENGWUDINGDING, MessageConnector.CONSUME_QIYEWEIXIN,
+            MessageConnector.CONSUME_ZHENGWUDINGDING, MessageConnector.CONSUME_QIYEWEIXIN, MessageConnector.CONSUME_YUNZHIJIA,
             MessageConnector.CONSUME_MPWEIXIN);
 
     private static final Message MESSAGE_OUTER = new Message(MessageConnector.CONSUME_KAFKA,
@@ -256,6 +257,7 @@ public class Messages extends ConfigObject {
         o.consumers.put("dingding_demo", XGsonBuilder.instance().toJsonTree(new DingdingConsumer()));
         o.consumers.put("welink_demo", XGsonBuilder.instance().toJsonTree(new WelinkConsumer()));
         o.consumers.put("qiyeweixin_demo", XGsonBuilder.instance().toJsonTree(new QiyeweixinConsumer()));
+        o.consumers.put("yunzhijia_demo", XGsonBuilder.instance().toJsonTree(new YunzhijiaConsumer()));
         o.consumers.put("mpweixin_demo", XGsonBuilder.instance().toJsonTree(new MpweixinConsumer()));
         o.consumers.put("kafka_demo", XGsonBuilder.instance().toJsonTree(KafkaConsumer.defaultInstance()));
         o.consumers.put("activemq_demo", XGsonBuilder.instance().toJsonTree(ActivemqConsumer.defaultInstance()));
@@ -861,6 +863,9 @@ public class Messages extends ConfigObject {
                         break;
                     case MessageConnector.CONSUME_QIYEWEIXIN:
                         list.add(gson.fromJson(jsonElement, QiyeweixinConsumer.class));
+                        break;
+                    case MessageConnector.CONSUME_YUNZHIJIA:
+                        list.add(gson.fromJson(jsonElement, YunzhijiaConsumer.class));
                         break;
                     case MessageConnector.CONSUME_MPWEIXIN:
                         list.add(gson.fromJson(jsonElement, MpweixinConsumer.class));
